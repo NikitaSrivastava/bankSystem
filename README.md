@@ -14,7 +14,7 @@ curl -X POST \
 "password":"nik"
 }'
 
-#FOR BANK DETAILS FROM CITY AND IFSC
+#FOR GETTING BANK DETAILS FROM CITY AND BANK NAME
 
 curl -X GET \
   'https://protected-crag-41968.herokuapp.com/secure/bankDetailsFromCityAndName?name=ABHYUDAYA%20COOPERATIVE%20BANK%20LIMITED&city=MUMBAI&offset=1&limit=2' \
