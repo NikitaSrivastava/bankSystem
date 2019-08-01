@@ -1,7 +1,7 @@
 # bankSystem
 
 
-#For getting jwt token
+#FOR GENERATING JWT TOKEN
  
 curl -X POST \
   https://protected-crag-41968.herokuapp.com/login \
@@ -14,7 +14,7 @@ curl -X POST \
 "password":"nik"
 }'
 
-#Getting bank details from city and name
+#FOR BANK DETAILS FROM CITY AND IFSC
 
 curl -X GET \
   'https://protected-crag-41968.herokuapp.com/secure/bankDetailsFromCityAndName?name=ABHYUDAYA%20COOPERATIVE%20BANK%20LIMITED&city=MUMBAI&offset=1&limit=2' \
@@ -29,7 +29,7 @@ curl -X GET \
 
 }'
 
-#Getting bank details from ifsc code
+#FOR GETTING BANK DETAILS FROM IFSC CODE
 
 curl -X GET \
   'https://protected-crag-41968.herokuapp.com/secure/bankDetails?ifsc=ABHY0065007' \
