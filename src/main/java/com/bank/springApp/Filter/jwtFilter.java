@@ -11,14 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
-
+//@ConfigurationProperties(prefix = "jwt")
+@Component("jwtFilterCustom")
 public class jwtFilter extends GenericFilter{
-	@Value("${JWT_SECRET_KEY}")
-	private String secretKey;
+	
+	private static final long serialVersionUID = 1L;
+	@Value("${jwt.secretkey}")
+	public String secretKey;
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
@@ -40,7 +46,8 @@ public class jwtFilter extends GenericFilter{
 		        final String token = authHeader.substring(7);
 
 		        try {
-		            final Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+		        	System.out.println(secretKey);
+		            final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
 		            request.setAttribute("claims", claims);
 		        } catch (final SignatureException e) {
 		            throw new ServletException("Invalid token");

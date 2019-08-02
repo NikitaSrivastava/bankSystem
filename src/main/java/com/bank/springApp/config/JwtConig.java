@@ -1,12 +1,13 @@
 package com.bank.springApp.config;
-
-
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.bank.springApp.Filter.*; 
 @Configuration
 public class JwtConig{
+  
 	@Bean
 	public FilterRegistrationBean<jwtFilter> jwtFilter() {
 		final FilterRegistrationBean<jwtFilter> registrationBean = new FilterRegistrationBean<jwtFilter>();

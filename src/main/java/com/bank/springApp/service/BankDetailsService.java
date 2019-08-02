@@ -3,6 +3,7 @@ package com.bank.springApp.service;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,6 @@ import com.bank.springApp.repository.BankDetailsRepository;
 public class BankDetailsService {
     @Autowired
     BankDetailsRepository bankDetailsRepository;
-    
 	public Optional<Bank_branches> getBankDetailsFromIfsc(String ifsc) {
 		System.out.println(this.bankDetailsRepository.findById(ifsc));
 		return this.bankDetailsRepository.findById(ifsc);
