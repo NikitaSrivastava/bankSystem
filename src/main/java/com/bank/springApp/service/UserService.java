@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.bank.springApp.model.UserDetails;
@@ -19,13 +20,15 @@ public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
-
+	@Value("${JWT_SECRET_KEY}")
+	private String secretKey;
+	
 	public UserDetails findByUsername(String username){
 		return userRepository.findByUsername(username);
 	}
 
 	public String generateAuthToken(UserDetails user) throws ServletException {
-		String jwtToken = "";
+		
 
 		if (user.getUsername() == null || user.getPassword() == null) {
 			throw new ServletException("Please fill in username and password");
@@ -47,9 +50,9 @@ public class UserService {
 		}
 
 		int expirationValidity = 5;
-		jwtToken = Jwts.builder().setSubject(username).claim("roles", "user").setIssuedAt(new Date())
+		String jwtToken = Jwts.builder().setSubject(username).claim("roles", "user").setIssuedAt(new Date())
 				.setExpiration(new Date(new Date().getTime()+ (expirationValidity *1000*60*60*24)))
-				.signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+				.signWith(SignatureAlgorithm.HS256, secretKey).compact();
 
 		return jwtToken;
 
