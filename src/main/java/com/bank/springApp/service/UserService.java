@@ -21,7 +21,7 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	@Value("${jwt.secretkey}")
-	private String ;
+	private String secretKey;
 
 	public UserDetails findByUsername(String username){
 		return userRepository.findByUsername(username);
@@ -40,7 +40,7 @@ public class UserService {
 		UserDetails userDetails = findByUsername(username);
 
 		if (userDetails == null) {
-			throw new ServletException("User email not found.");
+			throw new ServletException("User not found.");
 		}
 
 		String pwd = userDetails.getPassword();

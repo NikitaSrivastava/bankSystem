@@ -2,6 +2,8 @@ package com.bank.springApp.Filter;
 
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.GenericFilter;
 import javax.servlet.ServletException;
@@ -10,16 +12,17 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
-//@ConfigurationProperties(prefix = "jwt")
-@Component("jwtFilterCustom")
+
 public class jwtFilter extends GenericFilter{
 	
 	private static final long serialVersionUID = 1L;
@@ -46,12 +49,15 @@ public class jwtFilter extends GenericFilter{
 		        final String token = authHeader.substring(7);
 
 		        try {
-					String val = System.getenv("JWT_KEY"); 
-		            final Claims claims = Jwts.parser().setSigningKey(val).parseClaimsJws(token).getBody();
+		        	 String val = System.getenv("JWT_KEY"); 
+		        	 System.out.println(secretkey);
+		        	 
+			            final Claims claims = Jwts.parser().setSigningKey(val).parseClaimsJws(token).getBody();
 		            request.setAttribute("claims", claims);
 		        } catch (final SignatureException e) {
 		            throw new ServletException("Invalid token");
 		        }
+		        
 
 		        chain.doFilter(req, res);
 		    }
