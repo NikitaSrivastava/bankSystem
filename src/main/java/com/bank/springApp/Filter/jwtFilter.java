@@ -23,8 +23,8 @@ import io.jsonwebtoken.SignatureException;
 public class jwtFilter extends GenericFilter{
 	
 	private static final long serialVersionUID = 1L;
-	@Value("${jwt.secretkey}")
-	public String secretKey;
+	@Value("${JWT_KEY}")
+	private String secretkey;
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
@@ -46,8 +46,8 @@ public class jwtFilter extends GenericFilter{
 		        final String token = authHeader.substring(7);
 
 		        try {
-		        	System.out.println(secretKey);
-		            final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
+					String val = System.getenv("JWT_KEY"); 
+		            final Claims claims = Jwts.parser().setSigningKey(val).parseClaimsJws(token).getBody();
 		            request.setAttribute("claims", claims);
 		        } catch (final SignatureException e) {
 		            throw new ServletException("Invalid token");

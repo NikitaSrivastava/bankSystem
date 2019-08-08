@@ -21,7 +21,7 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	@Value("${jwt.secretkey}")
-	private String secretKey;
+	private String ;
 
 	public UserDetails findByUsername(String username){
 		return userRepository.findByUsername(username);
@@ -52,7 +52,7 @@ public class UserService {
 		int expirationValidity = 5;
 		jwtToken = Jwts.builder().setSubject(username).claim("roles", "user").setIssuedAt(new Date())
 				.setExpiration(new Date(new Date().getTime()+ (expirationValidity *1000*60*60*24)))
-				.signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+				.signWith(SignatureAlgorithm.HS256, secretKey).compact();
 
 		return jwtToken;
 
